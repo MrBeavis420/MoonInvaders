@@ -58,7 +58,7 @@ public class gameManager : MonoBehaviour
             if (obj.tag == "Enemy")
             {
 
-                obj.transform.RotateAround(target.transform.position, Vector3.forward, ((enemyBaseSpeed * Mathf.Abs(Vector3.Distance(new Vector3(0.0f, 0.0f, -1.0f), obj.transform.position))) * moveDirection) * Time.deltaTime);
+                obj.transform.RotateAround(target.transform.position, Vector3.forward, (enemyBaseSpeed * moveDirection) * Time.deltaTime);
             }
         }
     }
