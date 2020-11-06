@@ -331,6 +331,10 @@ MonoBehaviour:
   enemyBaseSpeed: 300
   StartEnemies: 10
   moveDelta: 1
+  EnemyBullet: {fileID: 1349208428043406056, guid: 8c8fcf3e0ae04ee40b27a81fe25f84c6,
+    type: 3}
+  bulletSpeedEnemy: 1
+  chanceEnemyFire: 10
 --- !u!1001 &125823112258016233
 PrefabInstance:
   m_ObjectHideFlags: 0

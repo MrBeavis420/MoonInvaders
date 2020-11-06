@@ -12,6 +12,17 @@ public class bulletCollision : MonoBehaviour
             Destroy(gameObject);
         }
 
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            Destroy(collision.collider.gameObject);
+            Destroy(gameObject);
+        }
+
+        if (collision.gameObject.name =="Earth")
+        {
+            Destroy(gameObject);
+        }
+
     }
 
     void FixedUpdate()

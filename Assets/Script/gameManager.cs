@@ -9,6 +9,9 @@ public class gameManager : MonoBehaviour
     public int enemyBaseSpeed = 20;
     public int StartEnemies = 10;
     public float moveDelta = 0.2F;
+    public GameObject EnemyBullet;
+    public float bulletSpeedEnemy = 10.0f;
+    public float chanceEnemyFire;
     private float myTime = 0.0F;
     private float nextMove = 0.5F;
     private float moveDirection;
@@ -47,7 +50,7 @@ public class gameManager : MonoBehaviour
 
     void MoveEnemies()
     {
-        
+        GameObject newBullet;
         var objects = GameObject.FindGameObjectsWithTag("Enemy");
         moveDirection = 0.0f;
         while (moveDirection == 0.0f) {
@@ -59,6 +62,20 @@ public class gameManager : MonoBehaviour
             {
 
                 obj.transform.RotateAround(target.transform.position, Vector3.forward, (enemyBaseSpeed * moveDirection) * Time.deltaTime);
+
+                if (Mathf.Round(Random.Range(0.0f, 100.0f)) <= chanceEnemyFire)
+                {
+                    Vector3 pos = new Vector3(obj.transform.position.x + (obj.transform.right.x * -obj.transform.localScale.x / 2), obj.transform.position.y + (obj.transform.right.y * -obj.transform.localScale.y / 2), -1);
+                    newBullet = Instantiate(EnemyBullet, pos, Quaternion.identity);
+                    Vector3 difference = new Vector3(0,0,0) - newBullet.transform.position;
+                    float distance = difference.magnitude;
+                    Vector2 direction = difference / distance;
+                    direction.Normalize();
+                    newBullet.GetComponent<Rigidbody2D>().velocity = direction * bulletSpeedEnemy;
+                }
+
+                
+
             }
         }
     }
