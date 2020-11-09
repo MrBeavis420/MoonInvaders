@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class gameManager : MonoBehaviour
 {
@@ -13,6 +14,8 @@ public class gameManager : MonoBehaviour
     public float bulletSpeedEnemy = 10.0f;
     public float chanceEnemyFire;
     public float playerScore;
+    public int earthHealth;
+    public int GMLevel;
     private float myTime = 0.0F;
     private float nextMove = 0.5F;
     private float moveDirection;
@@ -20,7 +23,14 @@ public class gameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        GameObject UIScore = GameObject.Find("/Canvas/uiScore");
+        GameObject UIEarthHealth = GameObject.Find("/Canvas/EarthHealth");
         playerScore = 0.0f;
+        earthHealth = 100;
+        GMLevel = 1;
+        Text pScore = UIScore.GetComponent<Text>();
+        pScore.text = "Score: " + playerScore;
+        UIEarthHealth.GetComponent<Slider>().value = earthHealth;
         LoadEnemies();
     }
 
