@@ -120,6 +120,8 @@ MonoBehaviour:
   speed: 10
   target: {fileID: 125823112726717528, guid: 95775302d2c9604448deae2b2913373f, type: 3}
   bullet: {fileID: 1349208428043406056, guid: 7a7071b5e8f89f04d8b79e3d39a07bf4, type: 3}
+  fireDelta: 0.2
+  bulletSpeed: 10
 --- !u!58 &6025659265987326845
 CircleCollider2D:
   m_ObjectHideFlags: 0

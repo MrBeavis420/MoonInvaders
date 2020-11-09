@@ -2,11 +2,21 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
+
+public enum gameState
+{
+    load,
+    running,
+    gameover,
+    newlevel
+};
 
 public class gameManager : MonoBehaviour
 {
     public GameObject target;
     public GameObject enemy;
+    public GameObject player;
     public int enemyBaseSpeed = 20;
     public int StartEnemies = 10;
     public float moveDelta = 0.2F;
@@ -18,33 +28,101 @@ public class gameManager : MonoBehaviour
     public int GMLevel;
     private float myTime = 0.0F;
     private float nextMove = 0.5F;
+    float startTime = 40.0f;
+    float timeLeft = 0.0f;
     private float moveDirection;
+    public int playerLives;
+    public gameState gms;
 
     // Start is called before the first frame update
     void Start()
     {
         GameObject UIScore = GameObject.Find("/Canvas/uiScore");
         GameObject UIEarthHealth = GameObject.Find("/Canvas/EarthHealth");
+        GameObject UILives = GameObject.Find("/Canvas/uiLives");
         playerScore = 0.0f;
         earthHealth = 100;
         GMLevel = 1;
+        playerLives = 2;
+        Text uLives = UILives.GetComponent<Text>();
+        uLives.text = "Lives: " + playerLives;
+        Instantiate(player, new Vector3(1, 0, -1), Quaternion.identity);
         Text pScore = UIScore.GetComponent<Text>();
         pScore.text = "Score: " + playerScore;
         UIEarthHealth.GetComponent<Slider>().value = earthHealth;
-        LoadEnemies();
+        this.gms = gameState.load;
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
-        myTime = myTime + Time.deltaTime;
+        GameObject UITimer = GameObject.Find("/Canvas/uiTimer");
+        GameObject UILives = GameObject.Find("/Canvas/uiLives");
 
-        if (myTime > nextMove)
+        if (this.gms == gameState.load)
         {
-            nextMove = myTime + moveDelta;
-            MoveEnemies();
-            nextMove = nextMove - myTime;
-            myTime = 0.0F;
+            timeLeft = startTime;
+            LoadEnemies();
+            this.gms = gameState.running;
+        }
+
+
+        if (this.gms == gameState.running)
+        {
+            myTime = myTime + Time.deltaTime;
+
+            if (myTime > nextMove)
+            {
+                nextMove = myTime + moveDelta;
+                MoveEnemies();
+                nextMove = nextMove - myTime;
+                myTime = 0.0F;
+            }
+
+            if (GameObject.FindGameObjectsWithTag("Enemy").Length == 0)
+            {
+                GMLevel += 1;
+                this.gms = gameState.load;
+            }
+
+            if (GameObject.FindGameObjectsWithTag("Player").Length == 0)
+            {
+                if(playerLives > 0)
+                {
+                    playerLives -= 1;
+                    Text uLives = UILives.GetComponent<Text>();
+                    uLives.text = "Lives: " + playerLives;
+                    Instantiate(player, new Vector3(1, 0, -1), Quaternion.identity);
+                }
+                else
+                {
+                    this.gms = gameState.gameover;
+                }
+            }
+
+            if(earthHealth == 0)
+            {
+                this.gms = gameState.gameover;
+            }
+
+            timeLeft = Mathf.Clamp(timeLeft - Time.deltaTime, 0, startTime);
+            Text uTimer = UITimer.GetComponent<Text>();
+            uTimer.text = "Timer: " + Mathf.Round(timeLeft);
+            if (timeLeft == 0)
+            {
+                this.gms = gameState.gameover;
+            }
+
+        }
+
+        if (this.gms == gameState.gameover)
+        {
+            SceneManager.LoadScene("MainMenu");
+        }
+
+        if (this.gms == gameState.newlevel)
+        {
+            playerScore += ((Mathf.Round(startTime-timeLeft)) * GMLevel);
         }
     }
 
@@ -85,8 +163,6 @@ public class gameManager : MonoBehaviour
                     direction.Normalize();
                     newBullet.GetComponent<Rigidbody2D>().velocity = direction * bulletSpeedEnemy;
                 }
-
-                
 
             }
         }
