@@ -4,12 +4,24 @@ using UnityEngine;
 
 public class bulletCollision : MonoBehaviour
 {
+
+    private void Start()
+    {
+
+    }
     void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Enemy"))
         {
             Destroy(collision.collider.gameObject);
             Destroy(gameObject);
+            if (gameObject.name.Substring(0,6) == "Bullet")
+            {
+                GameObject GM = GameObject.Find("GameManager");
+                gameManager GMScript = GM.GetComponent<gameManager>();
+                GMScript.playerScore += 1;
+                Debug.Log(GMScript.playerScore);
+            }
         }
 
         if (collision.gameObject.CompareTag("Player"))

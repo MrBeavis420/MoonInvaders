@@ -12,6 +12,7 @@ public class gameManager : MonoBehaviour
     public GameObject EnemyBullet;
     public float bulletSpeedEnemy = 10.0f;
     public float chanceEnemyFire;
+    public float playerScore;
     private float myTime = 0.0F;
     private float nextMove = 0.5F;
     private float moveDirection;
@@ -19,6 +20,7 @@ public class gameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        playerScore = 0.0f;
         LoadEnemies();
     }
 
