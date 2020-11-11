@@ -16,6 +16,7 @@ public class PlayerMove : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        //load pilot settings
 
     }
 
@@ -32,13 +33,13 @@ public class PlayerMove : MonoBehaviour
 
             if (Input.GetKey(KeyCode.LeftArrow))
             {
-                transform.RotateAround(target.transform.position, Vector3.forward, 100 * Time.deltaTime);
+                transform.RotateAround(target.transform.position, Vector3.forward, speed * Time.deltaTime);
 
             }
 
             if (Input.GetKey(KeyCode.RightArrow))
             {
-                transform.RotateAround(target.transform.position, Vector3.forward, -100 * Time.deltaTime);
+                transform.RotateAround(target.transform.position, Vector3.forward, (-1*speed) * Time.deltaTime);
             }
 
             myTime = myTime + Time.deltaTime;

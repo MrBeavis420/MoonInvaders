@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using UnityEditor;
 
 public enum gameState
 {
@@ -14,25 +15,35 @@ public enum gameState
 
 public class gameManager : MonoBehaviour
 {
+    //needed vars
     public GameObject target;
     public GameObject enemy;
-    public GameObject player;
-    public int enemyBaseSpeed = 20;
-    public int StartEnemies = 10;
-    public float moveDelta = 0.2F;
+    public GameObject pilot01;
+    public GameObject pilot02;
+    public GameObject pilot03;
     public GameObject EnemyBullet;
-    public float bulletSpeedEnemy = 10.0f;
-    public float chanceEnemyFire;
     public float playerScore;
     public int earthHealth;
     public int GMLevel;
-    private float myTime = 0.0F;
-    private float nextMove = 0.5F;
-    float startTime = 40.0f;
-    float timeLeft = 0.0f;
+    public string pilot;
+    public string difficulty;
     private float moveDirection;
     public int playerLives;
     public gameState gms;
+
+    //pilot vars
+
+    //diff vars
+    public int enemyBaseSpeed = 20;
+    public int StartEnemies = 10;
+    public float moveDelta = 0.2F;
+    private float myTime = 0.0F;
+    private float nextMove = 0.5F;
+    public float bulletSpeedEnemy = 10.0f;
+    public float chanceEnemyFire;
+    float startTime = 40.0f;
+    float timeLeft = 0.0f;
+
 
     // Start is called before the first frame update
     void Start()
@@ -40,13 +51,13 @@ public class gameManager : MonoBehaviour
         GameObject UIScore = GameObject.Find("/Canvas/uiScore");
         GameObject UIEarthHealth = GameObject.Find("/Canvas/EarthHealth");
         GameObject UILives = GameObject.Find("/Canvas/uiLives");
+        LoadPilot();
         playerScore = 0.0f;
         earthHealth = 100;
         GMLevel = 1;
         playerLives = 2;
         Text uLives = UILives.GetComponent<Text>();
         uLives.text = "Lives: " + playerLives;
-        Instantiate(player, new Vector3(1, 0, -1), Quaternion.identity);
         Text pScore = UIScore.GetComponent<Text>();
         pScore.text = "Score: " + playerScore;
         UIEarthHealth.GetComponent<Slider>().value = earthHealth;
@@ -92,7 +103,7 @@ public class gameManager : MonoBehaviour
                     playerLives -= 1;
                     Text uLives = UILives.GetComponent<Text>();
                     uLives.text = "Lives: " + playerLives;
-                    Instantiate(player, new Vector3(1, 0, -1), Quaternion.identity);
+                    LoadPilot();
                 }
                 else
                 {
@@ -124,6 +135,27 @@ public class gameManager : MonoBehaviour
         {
             playerScore += ((Mathf.Round(startTime-timeLeft)) * GMLevel);
         }
+    }
+
+    void LoadPilot()
+    {
+        if (PlayerPrefs.GetString("pilot") == "Char01")
+        {
+            Instantiate(pilot01, new Vector3(1, 0, -1), Quaternion.identity);
+        }
+        if (PlayerPrefs.GetString("pilot") == "Char02")
+        {
+            Instantiate(pilot02, new Vector3(1, 0, -1), Quaternion.identity);
+        }
+        if (PlayerPrefs.GetString("pilot") == "Char03")
+        {
+            Instantiate(pilot03, new Vector3(1, 0, -1), Quaternion.identity);
+        }
+    }
+
+    void LoadDIffSettings()
+    {
+        Debug.Log(PlayerPrefs.GetString("diff"));
     }
 
     void LoadEnemies()

@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 7624971267019389360}
   - component: {fileID: 6025659265987326845}
   m_Layer: 0
-  m_Name: Player
+  m_Name: Pilot01
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -74,7 +74,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.8793335, g: 1, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -117,11 +117,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3f6e9e8e4c7f784429f524960cc22c1e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 10
+  speed: 50
   target: {fileID: 125823112726717528, guid: 95775302d2c9604448deae2b2913373f, type: 3}
   bullet: {fileID: 1349208428043406056, guid: 7a7071b5e8f89f04d8b79e3d39a07bf4, type: 3}
-  fireDelta: 0.2
-  bulletSpeed: 10
+  fireDelta: 0.1
+  bulletSpeed: 20
 --- !u!58 &6025659265987326845
 CircleCollider2D:
   m_ObjectHideFlags: 0

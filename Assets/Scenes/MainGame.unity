@@ -1035,19 +1035,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: {fileID: 125823112726717511, guid: 95775302d2c9604448deae2b2913373f, type: 3}
   enemy: {fileID: 2476735659449392103, guid: 2202fadbd2c1eb447b1a4e13abc26507, type: 3}
-  player: {fileID: 7624971267019389371, guid: 705090e238a724c4fb86cf089da92940, type: 3}
-  enemyBaseSpeed: 300
-  StartEnemies: 10
-  moveDelta: 1
+  pilot01: {fileID: 7624971267019389371, guid: 705090e238a724c4fb86cf089da92940, type: 3}
+  pilot02: {fileID: 7624971267019389371, guid: ae7b5403445d87b46a3b0164283194b2, type: 3}
+  pilot03: {fileID: 7624971267019389371, guid: a0913f34ba97b6a4eacb12f7f136dfd4, type: 3}
   EnemyBullet: {fileID: 1349208428043406056, guid: 8c8fcf3e0ae04ee40b27a81fe25f84c6,
     type: 3}
-  bulletSpeedEnemy: 1
-  chanceEnemyFire: 10
   playerScore: 0
   earthHealth: 0
   GMLevel: 0
+  pilot: 
+  difficulty: 
   playerLives: 0
   gms: 0
+  enemyBaseSpeed: 300
+  StartEnemies: 10
+  moveDelta: 1
+  bulletSpeedEnemy: 1
+  chanceEnemyFire: 10
 --- !u!1 &2080818868
 GameObject:
   m_ObjectHideFlags: 0

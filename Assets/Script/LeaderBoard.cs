@@ -41,7 +41,6 @@ public class LeaderBoard : MonoBehaviour
             scoreList = dl.ToListHighToLow();
         }
 
-        Debug.Log(scoreList.Count);
         lbPlace = 1;
         foreach (dreamloLeaderBoard.Score currentScore in scoreList)
         {
