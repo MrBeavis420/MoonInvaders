@@ -30,6 +30,8 @@ public class gameManager : MonoBehaviour
     private float moveDirection;
     public int playerLives;
     public gameState gms;
+    public float playerRotationRadius = 1.5f; //Adjusts the radius of player from center of Earth in editor.
+    public float enemySpawnRadius = 10f; //Adjusts the radius in which enemies can spawn in editor.
 
     //pilot vars
 
@@ -141,15 +143,15 @@ public class gameManager : MonoBehaviour
     {
         if (PlayerPrefs.GetString("pilot") == "Char01")
         {
-            Instantiate(pilot01, new Vector3(1, 0, -1), Quaternion.identity);
+            Instantiate(pilot01, new Vector3(playerRotationRadius, 0, -1), Quaternion.identity);
         }
         if (PlayerPrefs.GetString("pilot") == "Char02")
         {
-            Instantiate(pilot02, new Vector3(1, 0, -1), Quaternion.identity);
+            Instantiate(pilot02, new Vector3(playerRotationRadius, 0, -1), Quaternion.identity);
         }
         if (PlayerPrefs.GetString("pilot") == "Char03")
         {
-            Instantiate(pilot03, new Vector3(1, 0, -1), Quaternion.identity);
+            Instantiate(pilot03, new Vector3(playerRotationRadius, 0, -1), Quaternion.identity);
         }
     }
 
@@ -162,7 +164,8 @@ public class gameManager : MonoBehaviour
     {
         while(GameObject.FindGameObjectsWithTag("Enemy").Length <= StartEnemies)
         {
-            Vector3 position = new Vector3(Mathf.Round(Random.Range(-5.0f, 5.0f)), Mathf.Round(Random.Range(-5.0f, 5.0f)), -1);
+            //Vector3 position = new Vector3(Mathf.Round(Random.Range(-5.0f, 5.0f)), Mathf.Round(Random.Range(-5.0f, 5.0f)), -1); //Commenting this out in favor of a modified line.
+            Vector3 position = new Vector3(Mathf.Round(Random.Range(-enemySpawnRadius, enemySpawnRadius)), Mathf.Round(Random.Range(-enemySpawnRadius, enemySpawnRadius)), -1);
             if (Vector3.Distance(new Vector3(0.0f, 0.0f, -1.0f), position) > 2)
             {
                 Instantiate(enemy, position, Quaternion.identity);

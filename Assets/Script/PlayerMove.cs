@@ -47,7 +47,7 @@ public class PlayerMove : MonoBehaviour
             if (Input.GetButton("Fire1") && myTime > nextFire)
             {
                 nextFire = myTime + fireDelta;
-                Vector3 pos = new Vector3(transform.position.x + (transform.right.x * transform.localScale.x / 2), transform.position.y + (transform.right.y * transform.localScale.y / 2), -1);
+                Vector3 pos = new Vector3(transform.position.x + (transform.right.x * transform.localScale.x / 6), transform.position.y + (transform.right.y * transform.localScale.y / 6), -1);
                 newBullet = Instantiate(bullet, pos, Quaternion.identity);
                 newBullet.GetComponent<Rigidbody2D>().velocity = new Vector2(transform.position.x * bulletSpeed, transform.position.y * bulletSpeed);
                 nextFire = nextFire - myTime;
