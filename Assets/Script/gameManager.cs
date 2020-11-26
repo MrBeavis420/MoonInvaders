@@ -31,7 +31,8 @@ public class gameManager : MonoBehaviour
     public int playerLives;
     public gameState gms;
     public float playerRotationRadius = 1.5f; //Adjusts the radius of player from center of Earth in editor.
-    public float enemySpawnRadius = 10f; //Adjusts the radius in which enemies can spawn in editor.
+    public float enemySpawnDistanceX = 9f; //Adjusts the X distance in which enemies can spawn in the scene.
+    public float enemySpawnDistanceY = 4f; //Adjusts the X distance in which enemies can spawn in the scene.
 
     //pilot vars
 
@@ -162,13 +163,22 @@ public class gameManager : MonoBehaviour
 
     void LoadEnemies()
     {
-        while(GameObject.FindGameObjectsWithTag("Enemy").Length <= StartEnemies)
+        while (GameObject.FindGameObjectsWithTag("Enemy").Length <= StartEnemies)
         {
             //Vector3 position = new Vector3(Mathf.Round(Random.Range(-5.0f, 5.0f)), Mathf.Round(Random.Range(-5.0f, 5.0f)), -1); //Commenting this out in favor of a modified line.
-            Vector3 position = new Vector3(Mathf.Round(Random.Range(-enemySpawnRadius, enemySpawnRadius)), Mathf.Round(Random.Range(-enemySpawnRadius, enemySpawnRadius)), -1);
+            Vector3 position = new Vector3(Mathf.Round(Random.Range(-enemySpawnDistanceX, enemySpawnDistanceX)), Mathf.Round(Random.Range(-enemySpawnDistanceY, enemySpawnDistanceY)), -1);
             if (Vector3.Distance(new Vector3(0.0f, 0.0f, -1.0f), position) > 2)
             {
                 Instantiate(enemy, position, Quaternion.identity);
+
+                var objects = GameObject.FindGameObjectsWithTag("Enemy");
+                foreach (var obj in objects)
+                {
+                    if (obj.tag == "Enemy")
+                    {
+                        obj.transform.right = target.transform.position - obj.transform.position; //Correct rotation so enemies face towards earth
+                    }
+                }
             }
         }
     }
@@ -187,6 +197,8 @@ public class gameManager : MonoBehaviour
             {
 
                 obj.transform.RotateAround(target.transform.position, Vector3.forward, (enemyBaseSpeed * moveDirection) * Time.deltaTime);
+                obj.transform.right = target.transform.position - obj.transform.position; //Correct rotation so enemies face towards earth
+                
 
                 if (Mathf.Round(Random.Range(0.0f, 100.0f)) <= chanceEnemyFire)
                 {
